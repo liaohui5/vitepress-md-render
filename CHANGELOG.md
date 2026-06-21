@@ -3,6 +3,13 @@
 
 ### Bug Fixes
 
+* Bump version to 1.0.1 ([a243e90](https://github.com/liaohui5/vitepress-md-render/commit/a243e90602bf7b6caa9efccbb1e65951e9c3ee8c))
+
+# 1.0.0 (2026-06-21)
+
+
+### Bug Fixes
+
 * Add ToDo.md to .gitignore ([84a43b2](https://github.com/liaohui5/vitepress-md-render/commit/84a43b2b629379ac57d1dff67dbac657c37f7ca9))
 * Add vitepress-style markdown render README ([7955c79](https://github.com/liaohui5/vitepress-md-render/commit/7955c793bea2f41bf82dc3e7e9c5d9356be1409d))
 * Bump version to 1.0.1 ([ccbf379](https://github.com/liaohui5/vitepress-md-render/commit/ccbf379569bc7143a3ce6d9dd19b17e44e630e09))

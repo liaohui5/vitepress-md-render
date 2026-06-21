@@ -22,11 +22,6 @@ jobs:
           fetch-depth: 0 # 获取完整的提交历史(semantic-release 需要)
           fetch-tags: true
 
-      - name: Clean up local tags and sync with remote
-        run: |
-          git tag -d v1.0.0 || true
-          git fetch --tags --force
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v6 # 安装 pnpm
         with:

@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions: # 权限设置
+      contents: write
+      packages: write
+      pull-requests: write
+      id-token: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # 获取完整的提交历史(semantic-release 需要)
+          fetch-tags: true
+
+      - name: Clean up local tags and sync with remote
+        run: |
+          git tag -d v1.0.0 || true
+          git fetch --tags --force
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6 # 安装 pnpm
+        with:
+          version: 11
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6 # 安装 nodejs v24
+        with:
+          node-version: 24
+
+      - name: Install Dependencies # 现在项目依赖
+        run: pnpm install
+
+      - name: Build # 打包
+        run: pnpm build
+
+      - name: Configure Git # 配置 git 信息
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Disable npm engine strict # 禁止 npm 严格检查
+        run: echo "engine-strict=false" >> .npmrc
+
+      - name: Run Semantic Release # 发布
+        run: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # 需要在仓库主页的 settings 中配置
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # 如果需要自动发布到 npm 仓库, 请取消注释
+          # 注意修改 .releaserc.js 中的 `npmPublish` 字段的值为 true
